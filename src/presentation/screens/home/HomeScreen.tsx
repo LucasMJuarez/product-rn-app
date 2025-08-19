@@ -1,10 +1,11 @@
+import { Button, Layout, Text } from '@ui-kitten/components'
 import React from 'react'
-import { Text, View } from 'react-native'
 
 export const HomeScreen = () => {
   return (
-    <View>
+    <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home Screen</Text>
-    </View>
+      <Button>Cerrar SECCION</Button>
+    </Layout>
   )
 }
