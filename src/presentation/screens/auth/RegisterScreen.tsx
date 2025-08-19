@@ -3,7 +3,7 @@ import { Button, Input, Layout, Text } from '@ui-kitten/components'
 import { useWindowDimensions, ScrollView } from 'react-native'
 import { RootStackParamList } from '../../navigation/StackNavigator';
 
-interface Props extends StackScreenProps<RootStackParamList, 'LoginScreen'> {
+interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'> {
 
 }
 
