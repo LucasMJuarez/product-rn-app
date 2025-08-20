@@ -2,6 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Button, Input, Layout, Text } from '@ui-kitten/components'
 import { useWindowDimensions, ScrollView } from 'react-native'
 import { RootStackParamList } from '../../navigation/StackNavigator';
+import { API_URL, STAGE } from '@env';
 
 interface Props extends StackScreenProps<RootStackParamList, 'LoginScreen'> {
 
@@ -10,6 +11,8 @@ interface Props extends StackScreenProps<RootStackParamList, 'LoginScreen'> {
 export const LoginScreen = ({ navigation }: Props) => {
 
   const { height } = useWindowDimensions();
+
+  console.log({apiUrl: API_URL, stage: STAGE})
   return (
     <Layout style={{ flex: 1 }}>
       <ScrollView style={{marginHorizontal: 40}}>
