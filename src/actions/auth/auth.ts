@@ -31,3 +31,17 @@ export const AuthLogin = async (email:string, password:string) => {
         return null;
     }
 }
+
+
+export const AuthCheckStatus = async (token: string) => {
+    try {
+        const { data } = await tesloApi.get<AuthResponse>('/auth/check-status', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return returnUserToken(data);
+    } catch (error) {
+        
+    }
+}
