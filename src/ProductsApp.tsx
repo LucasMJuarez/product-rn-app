@@ -1,9 +1,10 @@
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import * as eva from '@eva-design/eva';
-import { StackNavigator } from './presentation/navigation/StackNavigator';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { useColorScheme } from 'react-native';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import {StackNavigator} from './presentation/navigation/StackNavigator';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import {useColorScheme} from 'react-native';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {AuthProvider} from './presentation/store/providers/AuthProvider';
 
 export const ProductsApp = () => {
   const colorScheme = useColorScheme();
@@ -30,7 +31,9 @@ export const ProductsApp = () => {
             },
             fonts: DefaultTheme.fonts,
           }}>
+          <AuthProvider>
             <StackNavigator />
+          </AuthProvider>
         </NavigationContainer>
       </ApplicationProvider>
     </>
