@@ -25,8 +25,9 @@ const [isPosting, setIsPosting] = useState(false);
     if (form.email.length === 0 || form.password.length === 0) {
       return;
     }
-
+    setIsPosting(true);
     const wasSuccessful = await login(form.email, form.password);
+    setIsPosting(false);
     if (wasSuccessful) {
       return;
     } 
@@ -70,6 +71,7 @@ const [isPosting, setIsPosting] = useState(false);
         {/* Button */}
         <Layout>
           <Button 
+          disabled={isPosting}
             onPress={onLogin}
           >
             Ingresar
