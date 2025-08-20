@@ -23,10 +23,11 @@ export const AuthLogin = async (email:string, password:string) => {
 
     email = email.toLowerCase();
     try {
+        console.log('Making login request to:', tesloApi.defaults.baseURL + '/auth/login');
         const {data} = await tesloApi.post<AuthResponse>('/auth/login', { email, password });
         return returnUserToken(data);
     } catch (error) {
         console.error('Error logging in:', error);
-        throw error;
+        return null;
     }
 }

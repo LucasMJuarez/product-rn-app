@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { User } from "../../../domain/entities/user";
 import { AuthStatus } from "../../../infrastructure/interfaces/auth.status";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { AuthLogin } from "../../../actions/auth/auth";
 
 export interface AuthState {
@@ -12,7 +11,7 @@ export interface AuthState {
 }
 
 
-export const useAuthStore = create()((set,get) => ({
+export const useAuthStore = create<AuthState>()((set,get) => ({
     status: 'checking',
     token: undefined,
     user: undefined,
@@ -25,6 +24,8 @@ export const useAuthStore = create()((set,get) => ({
         }
 
         //TODO SAVE TOKEN IN STORAGE
+
+        console.log({resp})
         set({ status: 'authenticated', token: resp.token, user: resp.user });
         return true;
     }
