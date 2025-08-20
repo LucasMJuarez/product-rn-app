@@ -1,8 +1,10 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import { Button, Input, Layout, Text } from '@ui-kitten/components'
-import { useWindowDimensions, ScrollView } from 'react-native'
+import { useWindowDimensions, ScrollView, Alert } from 'react-native'
 import { RootStackParamList } from '../../navigation/StackNavigator';
 import { API_URL, STAGE } from '@env';
+import { useState } from 'react';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
 interface Props extends StackScreenProps<RootStackParamList, 'LoginScreen'> {
 
@@ -10,9 +12,30 @@ interface Props extends StackScreenProps<RootStackParamList, 'LoginScreen'> {
 
 export const LoginScreen = ({ navigation }: Props) => {
 
+ const { login } = useAuthStore();
+const [isPosting, setIsPosting] = useState(false);
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+
   const { height } = useWindowDimensions();
 
-  console.log({apiUrl: API_URL, stage: STAGE})
+  const onLogin = async () => {
+    if (form.email.length === 0 || form.password.length === 0) {
+      return;
+    }
+    setIsPosting(true);
+    const wasSuccessful = await login(form.email, form.password);
+    setIsPosting(false);
+    if (wasSuccessful) {
+      return;
+    } 
+      Alert.alert('Error', 'Credenciales incorrectas');
+
+  }
+
+  console.log({ apiUrl: API_URL, stage: STAGE });
   return (
     <Layout style={{ flex: 1 }}>
       <ScrollView style={{marginHorizontal: 40}}>
@@ -26,6 +49,8 @@ export const LoginScreen = ({ navigation }: Props) => {
             placeholder="Correo electrónico"
             keyboardType="email-address"
             autoCapitalize="none"
+            value={form.email}
+            onChangeText={(email) => setForm({ ...form, email })}
             style={{marginBottom: 10}}
           />
 
@@ -33,18 +58,21 @@ export const LoginScreen = ({ navigation }: Props) => {
             placeholder="Contraseña"
             autoCapitalize="none"
             secureTextEntry
+            value={form.password}
+            onChangeText={(password) => setForm({ ...form, password })}
             style={{marginBottom: 10}}
           />
         </Layout>
+
+        <Text>{JSON.stringify(form, null, 2)}</Text>
          {/* Space */}
         <Layout style={{height: 10}} />
 
         {/* Button */}
         <Layout>
           <Button 
-            onPress={() => {
-
-            }}
+          disabled={isPosting}
+            onPress={onLogin}
           >
             Ingresar
           </Button>
@@ -57,7 +85,8 @@ export const LoginScreen = ({ navigation }: Props) => {
             flexDirection: 'row',
             justifyContent: 'center',
           }}>
-          <Text>¿No tienes cuenta?</Text>          <Text 
+          <Text>¿No tienes cuenta?</Text>
+          <Text 
             status="primary" 
             category="s1"
             onPress={() =>{ navigation.navigate('RegisterScreen') }}
